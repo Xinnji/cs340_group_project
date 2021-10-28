@@ -24,6 +24,12 @@
             <td>7</td>
             <td>66</td>
             <td>Nicholas Broce</td>
+            <td>
+                <form class="pure-form" method="post">
+                    <input type="button" name="edit" value="E">
+                    <input type="button" name="delete" value="X">
+                </form>
+            </td>
         </tr>
         <tr>
             <td>1</td>
@@ -34,7 +40,23 @@
             <td>10</td>
             <td>65</td>
             <td>Jason Scott-Hakanson</td>
+            <td>
+                <form class="pure-form" method="post">
+                    <input type="button" name="edit" value="E">
+                    <input type="button" name="delete" value="X">
+                </form>
+            </td>
         </tr>
     </tbody>
 </table>
+<form class="pure-form" method="post">
+    <td></td>
+    <td><input type="text" name="title" placeholder="title"></td>
+    <td><input type="text" name="genre" placeholder="genre"></td>
+    <td><input type="text" name="network" placeholder="network"></td>
+    <td><input type="text" name="episodes" placeholder="episodes"></td>
+    <td><input type="text" name="seasons" placeholder="seasons"></td>
+    <td><input type="text" name="metacritic" placeholder="metacritic"></td>
+    <td><input class="pure-button pure-button-primary" type="submit" value="Add Entry"></td>
+</form>
 {% endblock %}

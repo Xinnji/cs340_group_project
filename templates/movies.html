@@ -22,6 +22,12 @@
             <td>130</td>
             <td>82</td>
             <td>Nicholas Broce, Jason Scott-Hakanson</td>
+            <td>
+                <form class="pure-form" method="post">
+                    <input type="button" name="edit" value="E">
+                    <input type="button" name="delete" value="X">
+                </form>
+            </td>
         </tr>
         <tr>
             <td>1</td>
@@ -31,7 +37,22 @@
             <td>156</td>
             <td>74</td>
             <td>Nicholas Broce, Jason Scott-Hakanson</td>
+            <td>
+                <form class="pure-form" method="post">
+                    <input type="button" name="edit" value="E">
+                    <input type="button" name="delete" value="X">
+                </form>
+            </td>
         </tr>
     </tbody>
 </table>
+<form class="pure-form" method="post">
+    <td></td>
+    <td><input type="text" name="title" placeholder="title"></td>
+    <td><input type="text" name="genre" placeholder="genre"></td>
+    <td><input type="text" name="director" placeholder="director"></td>
+    <td><input type="text" name="runTimeMins" placeholder="runTimeMins"></td>
+    <td><input type="text" name="metacritic" placeholder="metacritic"></td>
+    <td><input class="pure-button pure-button-primary" type="submit" value="Add Entry"></td>
+</form>
 {% endblock %}

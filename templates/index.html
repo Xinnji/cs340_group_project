@@ -8,15 +8,14 @@
     <body>
         <header class="pure-menu pure-menu-horizontal">
             <ul class="pure-menu-list">
-                <li class="pure-menu-item"><a class="pure-menu-link" href="/">Home</a> - The Home page</li>
-                <li class="pure-menu-item"><a class="pure-menu-link" href="/movies">Movies</a> - view or modify the list of Movies</li>
-                <li class="pure-menu-item"><a class="pure-menu-link" href="/shows">Shows</a> - view or modify the list of TV Shows</li>
-                <li class="pure-menu-item"><a class="pure-menu-link" href="/books">Books</a> - view or modify the list of Books</li>
-                <li class="pure-menu-item"><a class="pure-menu-link" href="/videogames">Video Games</a> - view or modify the list of Video Games</li>
+                <li class="pure-menu-item"><a class="pure-menu-link" href="/">Home</a></li>
+                <li class="pure-menu-item"><a class="pure-menu-link" href="/movies">Movies (view or modify the list of Movies)</a></li>
+                <li class="pure-menu-item"><a class="pure-menu-link" href="/shows">Shows (view or modify the list of TV Shows)</a></li>
+                <li class="pure-menu-item"><a class="pure-menu-link" href="/books">Books (view or modify the list of Books)</a></li>
+                <li class="pure-menu-item"><a class="pure-menu-link" href="/videogames">Video Games (view or modify the list of Video Games)</a></li>
             </ul>
         </header>
         <main>
-            {% block content %}{% endblock %}
             <h1>People</h1>
             <table class="pure-table pure-table-horizontal">
                 <thead>
@@ -48,8 +47,8 @@
                         <td>Bioshock, Bioshock Infinite, Lego Star Wars, Dishonored</td>
                         <td>
                             <form class="pure-form" method="post">
-                                <input class="pure-button" type="button" name="edit" value="E">
-                                <input class="pure-button" type="button" name="delete" value="X">
+                                <input type="button" name="edit" value="E">
+                                <input type="button" name="delete" value="X">
                             </form>
                         </td>
                     </tr>
@@ -67,24 +66,24 @@
                         <td>Bioshock, Bioshock Infinite, Lego Star Wars, Dishonored</td>
                         <td>
                             <form class="pure-form" method="post">
-                                <input class="pure-button" type="button" name="edit" value="E">
-                                <input class="pure-button" type="button" name="delete" value="X">
+                                <input type="button" name="edit" value="E">
+                                <input type="button" name="delete" value="X">
                             </form>
                         </td>
                     </tr>
                 </tbody>
             </table>
-
             <form class="pure-form" method="post">
-                <input type="text" name="id" placeholder="id">
-                <input type="text" name="name" placeholder="name">
-                <input type="text" name="age" placeholder="age">
-                <input type="text" name="favMovie" placeholder="favMovie">
-                <input type="text" name="favShow" placeholder="favShow">
-                <input type="text" name="favBook" placeholder="favBook">
-                <input type="text" name="favGame" placeholder="favGame">
-                <input class="pure-button pure-button-primary" type="submit" value="Add Entry">
+                <td></td>
+                <td><input type="text" name="name" placeholder="name"></td>
+                <td><input type="text" name="age" placeholder="age"></td>
+                <td><input type="text" name="favMovie" placeholder="favMovie"></td>
+                <td><input type="text" name="favShow" placeholder="favShow"></td>
+                <td><input type="text" name="favGame" placeholder="favGame"></td>
+                <td><input type="text" name="favBook" placeholder="favBook"></td>
+                <td><input class="pure-button pure-button-primary" type="submit" value="Add Entry"></td>
             </form>
+            {% block content %}{% endblock %}
         </main>
     </body>
 </html>
