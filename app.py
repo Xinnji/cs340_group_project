@@ -24,5 +24,5 @@ def page(page):
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8585))
-    app.run(host='flip3.engr.oregonstate.edu', port=port, debug=True)
+    app.run(host='flip3.engr.oregonstate.edu', port=port, debug=False)
     # app.run(debug=True)
