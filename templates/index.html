@@ -6,13 +6,13 @@
         <title>{% block title %}Home{% endblock %} | Seen-it?</title>
     </head>
     <body>
-        <header>
-            <ul>
-                <li><a href="/">Home</a> - The Home page</li>
-                <li><a href="/movies">Movies</a> - view or modify the list of Movies</li>
-                <li><a href="/shows">Shows</a> - view or modify the list of TV Shows</li>
-                <li><a href="/books">Books</a> - view or modify the list of Books</li>
-                <li><a href="/videogames">Video Games</a> - view or modify the list of Video Games</li>
+        <header class="pure-menu pure-menu-horizontal">
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item"><a class="pure-menu-link" href="/">Home</a> - The Home page</li>
+                <li class="pure-menu-item"><a class="pure-menu-link" href="/movies">Movies</a> - view or modify the list of Movies</li>
+                <li class="pure-menu-item"><a class="pure-menu-link" href="/shows">Shows</a> - view or modify the list of TV Shows</li>
+                <li class="pure-menu-item"><a class="pure-menu-link" href="/books">Books</a> - view or modify the list of Books</li>
+                <li class="pure-menu-item"><a class="pure-menu-link" href="/videogames">Video Games</a> - view or modify the list of Video Games</li>
             </ul>
         </header>
         <main>
@@ -45,6 +45,12 @@
                         <td>Star Wars The Clone Wars, You, Dexter, Lucifer</td>
                         <td>Harry Potter and The Half Blood Prince, Lord of the Rings: Felloship of the Ring, Dune</td>
                         <td>Bioshock, Bioshock Infinite, Lego Star Wars, Dishonored</td>
+                        <td>
+                            <form class="pure-form" method="post">
+                                <input class="pure-button" type="button" name="edit" value="E">
+                                <input class="pure-button" type="button" name="delete" value="X">
+                            </form>
+                        </td>
                     </tr>
                     <tr>
                         <td>1</td>
@@ -58,9 +64,26 @@
                         <td>Warehouse 13</td>
                         <td>Harry Potter and The Half Blood Prince, Lord of the Rings: Felloship of the Ring, Dune</td>
                         <td>Bioshock, Bioshock Infinite, Lego Star Wars, Dishonored</td>
+                        <td>
+                            <form class="pure-form" method="post">
+                                <input class="pure-button" type="button" name="edit" value="E">
+                                <input class="pure-button" type="button" name="delete" value="X">
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
             </table>
+
+            <form class="pure-form" method="post">
+                <input type="text" name="id" value="id">
+                <input type="text" name="name" value="name">
+                <input type="text" name="age" value="age">
+                <input type="text" name="favMovie" value="favMovie">
+                <input type="text" name="favShow" value="favShow">
+                <input type="text" name="favBook" value="favBook">
+                <input type="text" name="favGame" value="favGame">
+                <input class="pure-button pure-button-primary" type="submit" value="Add Entry">
+            </form>
         </main>
     </body>
 </html>
