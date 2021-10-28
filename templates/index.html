@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}Home{% endblock %} | Seen-it?</title>
+    </head>
+    <body>
+        <header>
+            <ul>
+                <li><a href="/">Home</a> - The Home page</li>
+                <li><a href="/movies">Movies</a> - view or modify the list of Movies</li>
+                <li><a href="/shows">Shows</a> - view or modify the list of TV Shows</li>
+                <li><a href="/books">Books</a> - view or modify the list of Books</li>
+                <li><a href="/videogames">Video Games</a> - view or modify the list of Video Games</li>
+            </ul>
+        </header>
+        <main>
+            {% block content %}{% endblock %}
+            <h1>People</h1>
+            <table>
+                <thead>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>age</th>
+                    <th>favMovie</th>
+                    <th>favShow</th>
+                    <th>favBook</th>
+                    <th>favGame</th>
+                    <th>seenMovies</th>
+                    <th>seenShows</th>
+                    <th>readBooks</th>
+                    <th>playedGames</th>
+                </thead>
+
+                <tbody>
+                    {% for n in range(0) %}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </main>
+    </body>
+</html>

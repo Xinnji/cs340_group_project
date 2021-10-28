@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+{% block title %}Video Games{% endblock %}
+{% block content %}
+<h1>Video Games</h1>
+<table>
+    <thead>
+        <th>id</th>
+        <th>title</th>
+        <th>genre</th>
+        <th>studio</th>
+        <th>playTimHrs</th>
+        <th>metacritic</th>
+        <th>PeoplePlayed</th>
+    </thead>
+
+    <tbody>
+        {% for n in range(0) %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+{% block title %}Books{% endblock %}
+{% block content %}
+<h1>Books</h1>
+<table>
+    <thead>
+        <th>id</th>
+        <th>title</th>
+        <th>genre</th>
+        <th>author</th>
+        <th>pages</th>
+        <th>metacritic</th>
+        <th>PeopleRead</th>
+    </thead>
+
+    <tbody>
+        {% for n in range(0) %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

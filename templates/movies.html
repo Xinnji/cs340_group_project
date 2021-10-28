@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+{% block title %}Movies{% endblock %}
+{% block content %}
+<h1>Movies</h1>
+<table>
+    <thead>
+        <th>id</th>
+        <th>title</th>
+        <th>genre</th>
+        <th>director</th>
+        <th>runTimeMins</th>
+        <th>metacritic</th>
+        <th>PeopleSeen</th>
+    </thead>
+
+    <tbody>
+        {% for n in range(0) %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+{% block title %}Shows{% endblock %}
+{% block content %}
+<h1>TV Shows</h1>
+<table>
+    <thead>
+        <th>id</th>
+        <th>title</th>
+        <th>genre</th>
+        <th>network</th>
+        <th>episodes</th>
+        <th>seasons</th>
+        <th>metacritic</th>
+        <th>PeopleSeen</th>
+    </thead>
+
+    <tbody>
+        {% for n in range(0) %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
