@@ -12,12 +12,12 @@ app = Flask(__name__)
 # videogames = ["id", "title", "genre", "studio", "playTimHrs", "metacritic"]
 
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def index():
     return render_template('index.html')
 
 
-@app.route('/<page>')
+@app.route('/<page>', methods=["GET", "POST"])
 def page(page):
     return render_template(f'{page}.html')
 
