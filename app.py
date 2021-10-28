@@ -2,7 +2,14 @@ from flask import Flask, render_template
 # import MySQLdb
 import os
 
+
 app = Flask(__name__)
+
+# people = ["id", "name", "age", "favMovie", "favShow", "favBook", "favGame", "seenMovies", "seenShows", "readBooks"]
+# movies = ["id", "title", "genre", "director", "runTimeMins", "metacritic"]
+# shows = ["id", "title", "genre", "network", "episodes", "seasons", "metacritic"]
+# books = ["id", "title", "genre", "author", "pages", "metacritic"]
+# videogames = ["id", "title", "genre", "studio", "playTimHrs", "metacritic"]
 
 
 @app.route('/')
