@@ -7,21 +7,49 @@ JOIN Shows ON People.id=seenShows.people_id
 JOIN Books ON People.id=readBooks.people_id
 JOIN VideoGames ON People.id=playedGames.people_id;
 
--- Get all Movies and their data for the display Movies page
+-- Get all Movies and their data for the display Movies page and for dropdowns
 SELECT Movies.id, title, genre, director, runTimMins, metacritic FROM Movies
 JOIN People ON Movies.id=seenMovies.movies_id;
 
--- Get all Shows and their data for the display Shows page
+-- Get all Shows and their data for the display Shows page and for dropdowns
 SELECT Shows.id, title, genre, network, episodes, seasons, metacritic FROM Shows
 JOIN People ON Shows.id=seenShows.shows_id;
 
--- Get all Books and their data for the display Movies page
+-- Get all Books and their data for the display Movies page and for dropdowns
 SELECT Books.id, title, genre, author, pages, metacritic FROM Books
 JOIN People ON Books.id=readBooks.books_id;
 
--- Get all Video Games and their data for the display Movies page
+-- Get all Video Games and their data for the display Movies page and for dropdowns
 SELECT VideoGames.id, title, genre, studio, playTimeHrs, metacritic FROM VideoGames
 JOIN People ON VideoGames.id=playedGames.video_games_id;
+
+-- Add a new Person
+INSERT INTO People (name, age, favMovie, favShow, favBook, favGame) VALUES (:nameInput, :ageInput, :movie_idInput, :show_idInput, :book_idInput, :game_idInput)
+
+-- Add a new Movie
+INSERT INTO Movies (title, genre, director, runTimeMins, metacritic) VALUES (:titleInput, :genreInput, :directorInput, :runTimeMinsInput, :metacriticInput)
+
+-- Add a new Show
+INSERT INTO Shows (title, genre, network, episodes, seasons, metacritic) VALUES (:titleInput, :genreInput, :networkInput, :episodesInput, :seasonsInput, :metacriticInput)
+
+-- Add a new Book
+INSERT INTO Books (title, genre, author, pages, metacritic) VALUES (:titleInput, :genreInput, :authorInput, :pagesInput, :metacriticInput)
+
+-- Add a new Video Game
+INSERT INTO VideoGames (title, genre, studio, playTimeHrs, metacritic) VALUES (:titleInput, :genreInput, :studioInput, :playTimeHrsInput, :metacriticInput)
+
+-- Associate a Person with a seen Movie (M:M)
+INSERT INTO seenMovies (people_id, movies_id) VALUES (:people_idInput, :movies_idInput)
+
+-- Associate a Person with a seen Show (M:M)
+INSERT INTO seenMovies (people_id, shows_id) VALUES (:people_idInput, :shows_idInput)
+
+-- Associate a Person with a read Book (M:M)
+INSERT INTO seenMovies (people_id, books_id) VALUES (:people_idInput, :books_idInput)
+
+-- Associate a Person with a played Video Game (M:M)
+INSERT INTO seenMovies (people_id, video_games_id) VALUES (:people_idInput, :video_games_idInput)
+
 
 
 
