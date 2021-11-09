@@ -69,6 +69,7 @@ CREATE TABLE 'Movies' (
 LOCK TABLES 'Movies' WRITE;
 /*!40000 ALTER TABLE `bsg_cert_people` DISABLE KEYS */;
 INSERT INTO 'Movies' VALUES (1,'Knives Out'),(2,'Mystery'),(3,'Rian Johnson'),(4,130), (5,82);
+INSERT INTO 'Movies' VALUES (1,'Dune(2021)'),(2,'Science Fiction'),(3,'Denis Villeneuve'),(4,156), (5,74);
 /*!40000 ALTER TABLE `bsg_cert_people` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,6 +99,7 @@ CREATE TABLE 'Shows' (
 LOCK TABLES 'Shows' WRITE;
 /*!40000 ALTER TABLE `bsg_cert_people` DISABLE KEYS */;
 INSERT INTO 'Shows' VALUES (1,'Star Wars: The Clone Wars'),(2,'Animation, Action & Adventure, Fantasy, Science Fiction, Kids'),(3,'Cartoon Network'),(4,133), (5,7), (6, 66);
+INSERT INTO 'Shows' VALUES (1,'Warehouse 13'),(2,'Comedy, Drama, Action & Adventure, Fantasy, Science Fiction'),(3,'SyFy'),(4,64), (5,10), (6, 65);
 /*!40000 ALTER TABLE `bsg_cert_people` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,6 +128,7 @@ CREATE TABLE 'Books' (
 LOCK TABLES 'Books' WRITE;
 /*!40000 ALTER TABLE `bsg_cert_people` DISABLE KEYS */;
 INSERT INTO 'Books' VALUES (1,'Harry Potter and the Half-Blood Prince'),(2,'Fantasy'),(3,'J.K.Rowling'),(4,607), (5,91);
+INSERT INTO 'Books' VALUES (1,'The Name of the Wind'),(2,'Heroic Fantasy'),(3,'Patrick Rothfuss'),(4,662), (5,90);
 /*!40000 ALTER TABLE `bsg_cert_people` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,6 +157,7 @@ CREATE TABLE 'VideoGames' (
 LOCK TABLES 'VideoGames' WRITE;
 /*!40000 ALTER TABLE `bsg_cert_people` DISABLE KEYS */;
 INSERT INTO 'VideoGames' VALUES (1,'Bioshock Infinte'),(2,'Action, Shooter, First-Person, Sci-Fi'),(3,'Irrational Games'),(4,11), (5,94);
+INSERT INTO 'VideoGames' VALUES (1,'Dishonored'),(2,'Action Adventure, Stealth, First-Person'),(3,'Arkane Studios'),(4,12), (5,91);
 /*!40000 ALTER TABLE `bsg_cert_people` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -179,6 +183,9 @@ CREATE TABLE 'readBooks' (
 
 LOCK TABLES 'readBooks' WRITE;
 /*!40000 ALTER TABLE `bsg_people` DISABLE KEYS */;
+INSERT INTO 'readBooks' VALUES (0, 0), (1, 0);
+INSERT INTO 'readBooks' VALUES (0, 0), (1, 1);
+INSERT INTO 'readBooks' VALUES (0, 1), (1, 1);
 /*!40000 ALTER TABLE `bsg_people` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,6 +211,10 @@ CREATE TABLE 'readBooks' (
 
 LOCK TABLES 'playedGames' WRITE;
 /*!40000 ALTER TABLE `bsg_people` DISABLE KEYS */;
+INSERT INTO 'playedGames' VALUES (0, 0), (1, 0);
+INSERT INTO 'playedGames' VALUES (0, 0), (1, 1);
+INSERT INTO 'playedGames' VALUES (0, 1), (1, 0);
+INSERT INTO 'playedGames' VALUES (0, 1), (1, 1);
 /*!40000 ALTER TABLE `bsg_people` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,6 +240,10 @@ CREATE TABLE 'seenMovies' (
 
 LOCK TABLES 'seenMovies' WRITE;
 /*!40000 ALTER TABLE `bsg_people` DISABLE KEYS */;
+INSERT INTO 'seenMovies' VALUES (0, 0), (1, 0);
+INSERT INTO 'seenMovies' VALUES (0, 0), (1, 1);
+INSERT INTO 'seenMovies' VALUES (0, 1), (1, 0);
+INSERT INTO 'seenMovies' VALUES (0, 1), (1, 1);
 /*!40000 ALTER TABLE `bsg_people` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -254,6 +269,8 @@ CREATE TABLE 'seenShows' (
 
 LOCK TABLES 'seenShows' WRITE;
 /*!40000 ALTER TABLE `bsg_people` DISABLE KEYS */;
+INSERT INTO 'seenShows' VALUES (0, 0), (1, 0);
+INSERT INTO 'seenShows' VALUES (0, 1), (1, 1);
 /*!40000 ALTER TABLE `bsg_people` ENABLE KEYS */;
 UNLOCK TABLES;
 
