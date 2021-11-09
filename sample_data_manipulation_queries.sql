@@ -25,18 +25,28 @@ JOIN People ON VideoGames.id=playedGames.video_games_id;
 
 -- Add a new Person
 INSERT INTO People (name, age, favMovie, favShow, favBook, favGame) VALUES (:nameInput, :ageInput, :movie_idInput, :show_idInput, :book_idInput, :game_idInput)
+-- Delete a Person
+DELETE FROM People WHERE id = :people_idInput
 
 -- Add a new Movie
 INSERT INTO Movies (title, genre, director, runTimeMins, metacritic) VALUES (:titleInput, :genreInput, :directorInput, :runTimeMinsInput, :metacriticInput)
+-- Delete a Person
+DELETE FROM Movies WHERE id = :movies_idInput
 
 -- Add a new Show
 INSERT INTO Shows (title, genre, network, episodes, seasons, metacritic) VALUES (:titleInput, :genreInput, :networkInput, :episodesInput, :seasonsInput, :metacriticInput)
+-- Delete a Person
+DELETE FROM Shows WHERE id = :shows_idInput
 
 -- Add a new Book
 INSERT INTO Books (title, genre, author, pages, metacritic) VALUES (:titleInput, :genreInput, :authorInput, :pagesInput, :metacriticInput)
+-- Delete a Person
+DELETE FROM Books WHERE id = :books_idInput
 
 -- Add a new Video Game
 INSERT INTO VideoGames (title, genre, studio, playTimeHrs, metacritic) VALUES (:titleInput, :genreInput, :studioInput, :playTimeHrsInput, :metacriticInput)
+-- Delete a Video Game
+DELETE FROM VideoGames WHERE id = :video_games_idInput
 
 -- Associate a Person with a seen Movie (M:M)
 INSERT INTO seenMovies (people_id, movies_id) VALUES (:people_idInput, :movies_idInput)
