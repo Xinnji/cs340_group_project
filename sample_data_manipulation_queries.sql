@@ -55,22 +55,22 @@ UPDATE VideoGames SET title=:titleInput, genre=:genreInput, studio=:studioInput,
 
 
 -- Delete a Person
-DELETE FROM People WHERE id=:people_idInput
+DELETE FROM People WHERE id=:people_idInput;
 -- Delete a Movie
-DELETE FROM Movies WHERE id=:movies_idInput
+DELETE FROM Movies WHERE id=:movies_idInput;
 -- Delete a Show
-DELETE FROM Shows WHERE id=:shows_idInput
+DELETE FROM Shows WHERE id=:shows_idInput;
 -- Delete a Book
-DELETE FROM Books WHERE id=:books_idInput
+DELETE FROM Books WHERE id=:books_idInput;
 -- Delete a Video Game
-DELETE FROM VideoGames WHERE id=:video_games_idInput
+DELETE FROM VideoGames WHERE id=:video_games_idInput;
 
 
 -- dis-associate a movie from a person (M-to-M deletion)
-DELETE FROM seenMovies WHERE people_id=:people_idInput AND movies_id=:movies_idInput
+DELETE FROM seenMovies WHERE people_id=:people_idInput AND movies_id=:movies_idInput;
 -- dis-associate a show from a person (M-to-M deletion)
-DELETE FROM seenShows WHERE people_id=:people_idInput AND shows_id=:shows_idInput
+DELETE FROM seenShows WHERE people_id=:people_idInput AND shows_id=:shows_idInput;
 -- dis-associate a book from a person (M-to-M deletion)
-DELETE FROM readBooks WHERE people_id=:people_idInput AND books_id=:books_idInput
+DELETE FROM readBooks WHERE people_id=:people_idInput AND books_id=:books_idInput;
 -- dis-associate a video game from a person (M-to-M deletion)
-DELETE FROM playedGames WHERE people_id=:people_idInput AND video_games_id=:video_games_idInput
+DELETE FROM playedGames WHERE people_id=:people_idInput AND video_games_id=:video_games_idInput;
