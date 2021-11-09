@@ -1,4 +1,31 @@
--- These are some Database Manipulation queries for a partially implemented Project Website 
+-- Colon : is the special character used to denote variables that will have data given by the user.
+
+-- Get all people and their data for the home People page
+SELECT People.id, name, age, Movies.title AS favMovie, Shows.title AS favShow, Books.title AS favBook, VideoGames.title AS favGame FROM People
+JOIN Movies ON People.id=seenMovies.people_id
+JOIN Shows ON People.id=seenShows.people_id
+JOIN Books ON People.id=readBooks.people_id
+JOIN VideoGames ON People.id=playedGames.people_id;
+
+-- Get all Movies and their data for the display Movies page
+SELECT Movies.id, title, genre, director, runTimMins, metacritic FROM Movies
+JOIN People ON Movies.id=seenMovies.movies_id;
+
+-- Get all Shows and their data for the display Shows page
+SELECT Shows.id, title, genre, network, episodes, seasons, metacritic FROM Shows
+JOIN People ON Shows.id=seenShows.shows_id;
+
+-- Get all Books and their data for the display Movies page
+SELECT Books.id, title, genre, author, pages, metacritic FROM Books
+JOIN People ON Books.id=readBooks.books_id;
+
+-- Get all Video Games and their data for the display Movies page
+SELECT VideoGames.id, title, genre, studio, playTimeHrs, metacritic FROM VideoGames
+JOIN People ON VideoGames.id=playedGames.video_games_id;
+
+
+
+-- These are some Database Manipulation queries for a partially implemented Project Website
 -- using the bsg database.
 -- Your submission should contain ALL the queries required to implement ALL the
 -- functionalities listed in the Project Specs.
@@ -12,16 +39,16 @@ SELECT bsg_people.character_id, fname, lname, bsg_planets.name AS homeworld, age
 -- get a single character's data for the Update People form
 SELECT character_id, fname, lname, homeworld, age FROM bsg_people WHERE character_id = :character_ID_selected_from_browse_character_page
 
--- get all character's data to populate a dropdown for associating with a certificate  
-SELECT character_id AS pid, fname, lname FROm bsg_people 
+-- get all character's data to populate a dropdown for associating with a certificate
+SELECT character_id AS pid, fname, lname FROm bsg_people
 -- get all certificates to populate a dropdown for associating with people
 SELECT certification_id AS cid, title FROM bsg_cert
 
 -- get all peoople with their current associated certificates to list
-SELECT pid, cid, CONCAT(fname,' ',lname) AS name, title AS certificate 
-FROM bsg_people 
-INNER JOIN bsg_cert_people ON bsg_people.character_id = bsg_cert_people.pid 
-INNER JOIN bsg_cert on bsg_cert.certification_id = bsg_cert_people.cid 
+SELECT pid, cid, CONCAT(fname,' ',lname) AS name, title AS certificate
+FROM bsg_people
+INNER JOIN bsg_cert_people ON bsg_people.character_id = bsg_cert_people.pid
+INNER JOIN bsg_cert on bsg_cert.certification_id = bsg_cert_people.cid
 ORDER BY name, certificate
 
 -- add a new character
@@ -30,7 +57,7 @@ INSERT INTO bsg_people (fname, lname, homeworld, age) VALUES (:fnameInput, :lnam
 -- associate a character with a certificate (M-to-M relationship addition)
 INSERT INTO bsg_cert_people (pid, cid) VALUES (:character_id_from_dropdown_Input, :certification_id_from_dropdown_Input)
 
--- update a character's data based on submission of the Update Character form 
+-- update a character's data based on submission of the Update Character form
 UPDATE bsg_people SET fname = :fnameInput, lname= :lnameInput, homeworld = :homeworld_id_from_dropdown_Input, age= :ageInput WHERE id= :character_ID_from_the_update_form
 
 -- delete a character
