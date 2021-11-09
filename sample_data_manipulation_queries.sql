@@ -50,15 +50,23 @@ DELETE FROM VideoGames WHERE id = :video_games_idInput
 
 -- Associate a Person with a seen Movie (M:M)
 INSERT INTO seenMovies (people_id, movies_id) VALUES (:people_idInput, :movies_idInput)
+-- dis-associate a movie from a person (M-to-M relationship deletion)
+DELETE FROM seenMovies WHERE people_id = :people_idInput AND movies_id = :movies_idInput
 
 -- Associate a Person with a seen Show (M:M)
 INSERT INTO seenMovies (people_id, shows_id) VALUES (:people_idInput, :shows_idInput)
+-- dis-associate a movie from a person (M-to-M relationship deletion)
+DELETE FROM seenMovies WHERE people_id = :people_idInput AND movies_id = :shows_idInput
 
 -- Associate a Person with a read Book (M:M)
 INSERT INTO seenMovies (people_id, books_id) VALUES (:people_idInput, :books_idInput)
+-- dis-associate a movie from a person (M-to-M relationship deletion)
+DELETE FROM seenMovies WHERE people_id = :people_idInput AND movies_id = :books_idInput
 
 -- Associate a Person with a played Video Game (M:M)
 INSERT INTO seenMovies (people_id, video_games_id) VALUES (:people_idInput, :video_games_idInput)
+-- dis-associate a movie from a person (M-to-M relationship deletion)
+DELETE FROM seenMovies WHERE people_id = :people_idInput AND movies_id = :video_games_idInput
 
 
 
