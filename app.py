@@ -4,16 +4,27 @@ import MySQLdb
 import os
 
 
+def sql_query(query):
+    con = MySQLdb.connect(host=config['sql']['host'],
+                          user=config['sql']['user'],
+                          passwd=config['sql']['passwd'],
+                          db=config['sql']['db'])
+    cursor = con.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute(query)
+    con.commit();
+    return cursor.fetchall()
+
+
 app = Flask(__name__)
 
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-con = MySQLdb.connect(host=config['sql']['host'],
-                      user=config['sql']['user'],
-                      passwd=config['sql']['passwd'],
-                      db=config['sql']['db'])
-cursor = con.cursor(MySQLdb.cursors.DictCursor)
+# con = MySQLdb.connect(host=config['sql']['host'],
+#                       user=config['sql']['user'],
+#                       passwd=config['sql']['passwd'],
+#                       db=config['sql']['db'])
+# cursor = con.cursor(MySQLdb.cursors.DictCursor)
 # For each query
 # cursor.execute('query')
 # con.commit();
@@ -48,14 +59,11 @@ def index():
             JOIN People on playedGames.people_id = People.id'''
     ]
     for query in queries:
-        cursor.execute(query)
-        result.append(cursor.fetchall())
-    # print(result)
+        result.append(sql_query(query))
 
     if request.method == "POST":
-        cursor.execute(f'''INSERT INTO People (name, age, favMovie, favShow, favBook, favGame)
+        sql_query(f'''INSERT INTO People (name, age, favMovie, favShow, favBook, favGame)
                         VALUES ("{request.form['name']}", {request.form['age']}, {request.form['favMovie']}, {request.form['favShow']}, {request.form['favBook']}, {request.form['favGame']});''')
-        con.commit();
         return redirect('/')
 
     return render_template('index.html', entity=People, result=result)
@@ -71,18 +79,15 @@ def movies():
             JOIN People on seenMovies.people_id = People.id'''
     ]
     for query in queries:
-        cursor.execute(query)
-        result.append(cursor.fetchall())
-    # print(result)
+        result.append(sql_query(query))
 
     if request.method == "POST":
         if all(attr in request.form for attr in Movies[1:-1]):
-            cursor.execute(f'''INSERT INTO Movies (title, genre, director, runTimeMins, metacritic)
-                            VALUES ("{request.form['title']}", "{request.form['genre']}", "{request.form['director']}", {request.form['runTimeMins']}, {request.form['metacritic']});''')
+            sql_query(f'''INSERT INTO Movies (title, genre, director, runTimeMins, metacritic)
+                        VALUES ("{request.form['title']}", "{request.form['genre']}", "{request.form['director']}", {request.form['runTimeMins']}, {request.form['metacritic']});''')
         elif ('people_id' in request.form) and ('movies_id' in request.form):
-            cursor.execute(f'''INSERT INTO seenMovies (people_id, movies_id)
-                            VALUES ({request.form['people_id']}, {request.form['movies_id']});''')
-        con.commit();
+            sql_query(f'''INSERT INTO seenMovies (people_id, movies_id)
+                        VALUES ({request.form['people_id']}, {request.form['movies_id']});''')
         print(2)
         return redirect('/movies')
 
@@ -99,18 +104,15 @@ def shows():
             JOIN People on seenShows.people_id = People.id'''
     ]
     for query in queries:
-        cursor.execute(query)
-        result.append(cursor.fetchall())
-    # print(result)
+        result.append(sql_query(query))
 
     if request.method == "POST":
         if all(attr in request.form for attr in Shows[1:-1]):
-            cursor.execute(f'''INSERT INTO Shows (title, genre, network, episodes, seasons, metacritic)
-            VALUES ("{request.form['title']}", "{request.form['genre']}", "{request.form['network']}", {request.form['episodes']}, {request.form['seasons']}, {request.form['metacritic']});''')
+            sql_query(f'''INSERT INTO Shows (title, genre, network, episodes, seasons, metacritic)
+                        VALUES ("{request.form['title']}", "{request.form['genre']}", "{request.form['network']}", {request.form['episodes']}, {request.form['seasons']}, {request.form['metacritic']});''')
         elif ('people_id' in request.form) and ('shows_id' in request.form):
-                    cursor.execute(f'''INSERT INTO seenShows (people_id, shows_id)
-                                    VALUES ({request.form['people_id']}, {request.form['shows_id']});''')
-        con.commit();
+            sql_query(f'''INSERT INTO seenShows (people_id, shows_id)
+                        VALUES ({request.form['people_id']}, {request.form['shows_id']});''')
         return redirect('/shows')
 
     return render_template('shows.html', entity=Shows, result=result)
@@ -126,18 +128,15 @@ def books():
             JOIN People on readBooks.people_id = People.id'''
     ]
     for query in queries:
-        cursor.execute(query)
-        result.append(cursor.fetchall())
-    # print(result)
+        result.append(sql_query(query))
 
     if request.method == "POST":
         if all(attr in request.form for attr in Books[1:-1]):
-            cursor.execute(f'''INSERT INTO Books (title, genre, author, pages, metacritic)
-                            VALUES ("{request.form['title']}", "{request.form['genre']}", "{request.form['author']}", {request.form['pages']}, {request.form['metacritic']});''')
+            sql_query(f'''INSERT INTO Books (title, genre, author, pages, metacritic)
+                        VALUES ("{request.form['title']}", "{request.form['genre']}", "{request.form['author']}", {request.form['pages']}, {request.form['metacritic']});''')
         elif ('people_id' in request.form) and ('books_id' in request.form):
-                    cursor.execute(f'''INSERT INTO readBooks (people_id, books_id)
-                                    VALUES ({request.form['people_id']}, {request.form['books_id']});''')
-        con.commit();
+            sql_query(f'''INSERT INTO readBooks (people_id, books_id)
+                        VALUES ({request.form['people_id']}, {request.form['books_id']});''')
         return redirect('/books')
 
     return render_template('books.html', entity=Books, result=result)
@@ -153,18 +152,15 @@ def videogames():
             JOIN People on playedGames.people_id = People.id'''
     ]
     for query in queries:
-        cursor.execute(query)
-        result.append(cursor.fetchall())
-    # print(result)
+        result.append(sql_query(query))
 
     if request.method == "POST":
         if all(attr in request.form for attr in VideoGames[1:-1]):
-            cursor.execute(f'''INSERT INTO VideoGames (title, genre, studio, playTimeHrs, metacritic)
-                            VALUES ("{request.form['title']}", "{request.form['genre']}", "{request.form['studio']}", {request.form['playTimeHrs']}, {request.form['metacritic']});''')
+            sql_query(f'''INSERT INTO VideoGames (title, genre, studio, playTimeHrs, metacritic)
+                        VALUES ("{request.form['title']}", "{request.form['genre']}", "{request.form['studio']}", {request.form['playTimeHrs']}, {request.form['metacritic']});''')
         elif ('people_id' in request.form) and ('video_games_id' in request.form):
-                    cursor.execute(f'''INSERT INTO playedGames (people_id, video_games_id)
-                                    VALUES ({request.form['people_id']}, {request.form['video_games_id']});''')
-        con.commit();
+            sql_query(f'''INSERT INTO playedGames (people_id, video_games_id)
+                        VALUES ({request.form['people_id']}, {request.form['video_games_id']});''')
         return redirect('/videogames')
 
     return render_template('videogames.html', entity=VideoGames, result=result)
