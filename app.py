@@ -154,6 +154,6 @@ def videogames():
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 8585))
+    port = int(os.environ.get('PORT', 8686))
     app.run(host='flip3.engr.oregonstate.edu', port=port, debug=True)
     # app.run(debug=True)
