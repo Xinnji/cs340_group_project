@@ -1,11 +1,11 @@
 -- Colon : is the special character used to denote variables that will have data given by the user.
 
 -- Get all people and their data for the home People page
-SELECT People.id, name, age, Movies.title AS favMovie, Shows.title AS favShow, Books.title AS favBook, VideoGames.title AS favGame FROM People
-JOIN Movies ON People.id=seenMovies.people_id
-JOIN Shows ON People.id=seenShows.people_id
-JOIN Books ON People.id=readBooks.people_id
-JOIN VideoGames ON People.id=playedGames.people_id;
+SELECT name, age, Movies.title, Shows.title, Books.title, VideoGames.title FROM People
+JOIN Movies ON Movies.id = favMovie
+JOIN Shows ON Shows.id = favShow
+JOIN Books ON Books.id = favBook
+JOIN VideoGames ON VideoGames.id = favGame;
 -- Get all Movies and their data for the display Movies page and for dropdowns
 SELECT Movies.id, title, genre, director, runTimMins, metacritic FROM Movies
 JOIN People ON Movies.id=seenMovies.movies_id;
