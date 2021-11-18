@@ -22,7 +22,7 @@ People = ["id", "name", "age", "favMovie", "favShow", "favBook", "favGame", "see
 Movies = ["id", "title", "genre", "director", "runTimeMins", "metacritic", "Seen-it"]
 Shows = ["id", "title", "genre", "network", "episodes", "seasons", "metacritic", "Seen-it"]
 Books = ["id", "title", "genre", "author", "pages", "metacritic", "Read-it"]
-VideoGames = ["id", "title", "genre", "studio", "playTimHrs", "metacritic", "Played-it"]
+VideoGames = ["id", "title", "genre", "studio", "playTimeHrs", "metacritic", "Played-it"]
 
 
 @app.route('/', methods=["GET", "POST"])
@@ -61,7 +61,7 @@ def index():
     return render_template('index.html', entity=People, result=result)
 
 
-@app.route('/movies', methods=["GET", "POST"])
+@app.route('/movies', methods=["GET", "POST", "PATCH"])
 def movies():
     result = []
     queries = [
@@ -76,9 +76,14 @@ def movies():
     # print(result)
 
     if request.method == "POST":
-        cursor.execute(f'''INSERT INTO Shows (title, genre, director, runTimeMins, metacritic)
-                        VALUES ("{request.form['title']}", "{request.form['genre']}", "{request.form['director']}", {request.form['runTimeMins']}, {request.form['metacritic']});''')
+        if all(attr in request.form for attr in Movies[1:-1]):
+            cursor.execute(f'''INSERT INTO Movies (title, genre, director, runTimeMins, metacritic)
+                            VALUES ("{request.form['title']}", "{request.form['genre']}", "{request.form['director']}", {request.form['runTimeMins']}, {request.form['metacritic']});''')
+        elif ('people_id' in request.form) and ('movies_id' in request.form):
+            cursor.execute(f'''INSERT INTO seenMovies (people_id, movies_id)
+                            VALUES ({request.form['people_id']}, {request.form['movies_id']});''')
         con.commit();
+        print(2)
         return redirect('/movies')
 
     return render_template('movies.html', entity=Movies, result=result)
@@ -99,8 +104,12 @@ def shows():
     # print(result)
 
     if request.method == "POST":
-        cursor.execute(f'''INSERT INTO Shows (title, genre, network, episodes, seasons, metacritic)
-                        VALUES ("{request.form['title']}", "{request.form['genre']}", "{request.form['network']}", {request.form['episodes']}, {request.form['seasons']}, {request.form['metacritic']});''')
+        if all(attr in request.form for attr in Shows[1:-1]):
+            cursor.execute(f'''INSERT INTO Shows (title, genre, network, episodes, seasons, metacritic)
+            VALUES ("{request.form['title']}", "{request.form['genre']}", "{request.form['network']}", {request.form['episodes']}, {request.form['seasons']}, {request.form['metacritic']});''')
+        elif ('people_id' in request.form) and ('shows_id' in request.form):
+                    cursor.execute(f'''INSERT INTO seenShows (people_id, shows_id)
+                                    VALUES ({request.form['people_id']}, {request.form['shows_id']});''')
         con.commit();
         return redirect('/shows')
 
@@ -122,8 +131,12 @@ def books():
     # print(result)
 
     if request.method == "POST":
-        cursor.execute(f'''INSERT INTO Shows (title, genre, author, pages, metacritic)
-                        VALUES ("{request.form['title']}", "{request.form['genre']}", "{request.form['author']}", {request.form['pages']}, {request.form['metacritic']});''')
+        if all(attr in request.form for attr in Books[1:-1]):
+            cursor.execute(f'''INSERT INTO Books (title, genre, author, pages, metacritic)
+                            VALUES ("{request.form['title']}", "{request.form['genre']}", "{request.form['author']}", {request.form['pages']}, {request.form['metacritic']});''')
+        elif ('people_id' in request.form) and ('books_id' in request.form):
+                    cursor.execute(f'''INSERT INTO readBooks (people_id, books_id)
+                                    VALUES ({request.form['people_id']}, {request.form['books_id']});''')
         con.commit();
         return redirect('/books')
 
@@ -145,8 +158,12 @@ def videogames():
     # print(result)
 
     if request.method == "POST":
-        cursor.execute(f'''INSERT INTO Shows (title, genre, studio, playTimeHrs, metacritic)
-                        VALUES ("{request.form['title']}", "{request.form['genre']}", "{request.form['studio']}", {request.form['playTimeHrs']}, {request.form['metacritic']});''')
+        if all(attr in request.form for attr in VideoGames[1:-1]):
+            cursor.execute(f'''INSERT INTO VideoGames (title, genre, studio, playTimeHrs, metacritic)
+                            VALUES ("{request.form['title']}", "{request.form['genre']}", "{request.form['studio']}", {request.form['playTimeHrs']}, {request.form['metacritic']});''')
+        elif ('people_id' in request.form) and ('video_games_id' in request.form):
+                    cursor.execute(f'''INSERT INTO playedGames (people_id, video_games_id)
+                                    VALUES ({request.form['people_id']}, {request.form['video_games_id']});''')
         con.commit();
         return redirect('/videogames')
 
@@ -154,6 +171,6 @@ def videogames():
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 8686))
+    port = int(os.environ.get('PORT', 8585))
     app.run(host='flip3.engr.oregonstate.edu', port=port, debug=True)
     # app.run(debug=True)

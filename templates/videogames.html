@@ -40,8 +40,14 @@
     <input type="text" name="title" placeholder="title">
     <input type="text" name="genre" placeholder="genre">
     <input type="text" name="studio" placeholder="studio">
-    <input type="text" name="PlayTimHrs" placeholder="PlayTimHrs">
+    <input type="text" name="playTimeHrs" placeholder="playTimeHrs">
     <input type="text" name="metacritic" placeholder="metacritic">
     <input class="pure-button pure-button-primary" type="submit" value="Add Entry">
+</form>
+<h1>Played Something New?</h1>
+<form class="pure-form" method="post">
+    <input type="text" name="people_id" placeholder="people_id">
+    <input type="text" name="video_games_id" placeholder="video_games_id">
+    <input class="pure-button pure-button-primary" type="submit" value="Add Played Game">
 </form>
 {% endblock %}
