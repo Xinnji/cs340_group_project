@@ -9,24 +9,23 @@
 </form>
 <table class="pure-table pure-table-horizontal">
     <thead>
-        <th>id</th>
-        <th>title</th>
-        <th>genre</th>
-        <th>studio</th>
-        <th>playTimHrs</th>
-        <th>metacritic</th>
-        <th>PeoplePlayed</th>
+        {% for attr in entity %}
+        <th>{{ attr }}</th>
+        {% endfor %}
     </thead>
-
     <tbody>
+        {% for row in result[0] %}
         <tr>
-            <td>0</td>
-            <td>Bioshock Infinite</td>
-            <td>Action, Shooter, First-Person, Sci-Fi</td>
-            <td>Irrational Games</td>
-            <td>11.5</td>
-            <td>94</td>
-            <td>Nicholas Broce, Jason Scott-Hakanson</td>
+            {% for data in row %}
+            <td>{{ row[data] }}</td>
+            {% endfor %}
+            <td>
+                {% for seen in result[1] %}
+                {% if seen['id'] == row['id'] %}
+                {{ seen['name'] }};
+                {% endif %}
+                {% endfor %}
+            </td>
             <td>
                 <form class="pure-form" method="post">
                     <input type="button" name="edit" value="E">
@@ -34,29 +33,15 @@
                 </form>
             </td>
         </tr>
-        <tr>
-            <td>1</td>
-            <td>Dishonored</td>
-            <td>Action Adventure, Stealth, First-Person</td>
-            <td>Arkane Studios</td>
-            <td>12</td>
-            <td>91</td>
-            <td>Nicholas Broce, Jason Scott-Hakanson</td>
-            <td>
-                <form class="pure-form" method="post">
-                    <input type="button" name="edit" value="E">
-                    <input type="button" name="delete" value="X">
-                </form>
-            </td>
-        </tr>
+        {% endfor %}
     </tbody>
 </table>
 <form class="pure-form" method="post">
-                <input type="text" name="title" placeholder="title">
-                <input type="text" name="genre" placeholder="genre">
-                <input type="text" name="studio" placeholder="studio">
-                <input type="text" name="PlayTimHrs" placeholder="PlayTimHrs">
-                <input type="text" name="metacritic" placeholder="metacritic">
-                <input class="pure-button pure-button-primary" type="submit" value="Add Entry">
-            </form>
+    <input type="text" name="title" placeholder="title">
+    <input type="text" name="genre" placeholder="genre">
+    <input type="text" name="studio" placeholder="studio">
+    <input type="text" name="PlayTimHrs" placeholder="PlayTimHrs">
+    <input type="text" name="metacritic" placeholder="metacritic">
+    <input class="pure-button pure-button-primary" type="submit" value="Add Entry">
+</form>
 {% endblock %}

@@ -16,6 +16,7 @@
             </ul>
         </header>
         <main>
+            {% block content %}
             <h1>People</h1>
             <table class="pure-table pure-table-horizontal">
                 <thead>
@@ -23,7 +24,6 @@
                     <th>{{ attr }}</th>
                     {% endfor %}
                 </thead>
-
                 <tbody>
                     {% for row in result[0] %}
                     <tr>
@@ -58,7 +58,7 @@
                 <input type="text" name="favBook" placeholder="favBook">
                 <input class="pure-button pure-button-primary" type="submit" value="Add Entry">
             </form>
-            {% block content %}{% endblock %}
+            {% endblock %}
         </main>
     </body>
 </html>

@@ -9,24 +9,23 @@
 </form>
 <table class="pure-table pure-table-horizontal">
     <thead>
-        <th>id</th>
-        <th>title</th>
-        <th>genre</th>
-        <th>director</th>
-        <th>runTimeMins</th>
-        <th>metacritic</th>
-        <th>PeopleSeen</th>
+        {% for attr in entity %}
+        <th>{{ attr }}</th>
+        {% endfor %}
     </thead>
-
     <tbody>
+        {% for row in result[0] %}
         <tr>
-            <td>0</td>
-            <td>Knives Out</td>
-            <td>Mystery</td>
-            <td>Rian Johnson</td>
-            <td>130</td>
-            <td>82</td>
-            <td>Nicholas Broce, Jason Scott-Hakanson</td>
+            {% for data in row %}
+            <td>{{ row[data] }}</td>
+            {% endfor %}
+            <td>
+                {% for seen in result[1] %}
+                {% if seen['id'] == row['id'] %}
+                {{ seen['name'] }};
+                {% endif %}
+                {% endfor %}
+            </td>
             <td>
                 <form class="pure-form" method="post">
                     <input type="button" name="edit" value="E">
@@ -34,30 +33,15 @@
                 </form>
             </td>
         </tr>
-        <tr>
-            <td>1</td>
-            <td>Dune(2021)</td>
-            <td>Science Fiction</td>
-            <td>Denis Villeneuve</td>
-            <td>156</td>
-            <td>74</td>
-            <td>Nicholas Broce, Jason Scott-Hakanson</td>
-            <td>
-                <form class="pure-form" method="post">
-                    <input type="button" name="edit" value="E">
-                    <input type="button" name="delete" value="X">
-                </form>
-            </td>
-        </tr>
+        {% endfor %}
     </tbody>
 </table>
 <form class="pure-form" method="post">
-    <td></td>
-    <td><input type="text" name="title" placeholder="title"></td>
-    <td><input type="text" name="genre" placeholder="genre"></td>
-    <td><input type="text" name="director" placeholder="director"></td>
-    <td><input type="text" name="runTimeMins" placeholder="runTimeMins"></td>
-    <td><input type="text" name="metacritic" placeholder="metacritic"></td>
-    <td><input class="pure-button pure-button-primary" type="submit" value="Add Entry"></td>
+    <input type="text" name="title" placeholder="title">
+    <input type="text" name="genre" placeholder="genre">
+    <input type="text" name="director" placeholder="director">
+    <input type="text" name="runTimeMins" placeholder="runTimeMins">
+    <input type="text" name="metacritic" placeholder="metacritic">
+    <input class="pure-button pure-button-primary" type="submit" value="Add Entry">
 </form>
 {% endblock %}
