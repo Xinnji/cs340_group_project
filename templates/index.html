@@ -40,15 +40,16 @@
                         </td>
                         {% endfor %}
                         <td>
-                            <form class="pure-form" method="post">
-                                <input type="button" name="edit" value="E">
-                                <input type="button" name="delete" value="X">
+                            <form class="pure-form">
+                                <a href="/update?table=People&id={{ row['id'] }}">E</a>
+                                <a href="/delete?table=People&id={{ row['id'] }}">X</a>
                             </form>
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
+            {% block update %}
             <form class="pure-form" method="post">
                 <input type="text" name="name" placeholder="name">
                 <input type="text" name="age" placeholder="age">
@@ -58,6 +59,7 @@
                 <input type="text" name="favBook" placeholder="favBook">
                 <input class="pure-button pure-button-primary" type="submit" value="Add Entry">
             </form>
+            {% endblock %}
             {% endblock %}
         </main>
     </body>

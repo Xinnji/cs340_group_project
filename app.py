@@ -4,6 +4,7 @@ import MySQLdb
 import os
 
 
+# Execute a SQL query after connecting to the database
 def sql_query(query):
     con = MySQLdb.connect(host=config['sql']['host'],
                           user=config['sql']['user'],
@@ -15,20 +16,12 @@ def sql_query(query):
     return cursor.fetchall()
 
 
+# Instantiate the Flask website object
 app = Flask(__name__)
-
+# Instantiate the config parser so we don't have to include sensitive info like passwords
 config = configparser.ConfigParser()
 config.read('config.ini')
-
-# con = MySQLdb.connect(host=config['sql']['host'],
-#                       user=config['sql']['user'],
-#                       passwd=config['sql']['passwd'],
-#                       db=config['sql']['db'])
-# cursor = con.cursor(MySQLdb.cursors.DictCursor)
-# For each query
-# cursor.execute('query')
-# con.commit();
-
+# Define a bunch of entity attributes so we can dynamically check forms and whatnot
 People = ["id", "name", "age", "favMovie", "favShow", "favBook", "favGame", "seenMovies", "seenShows", "readBooks", "playedGames"]
 Movies = ["id", "title", "genre", "director", "runTimeMins", "metacritic", "Seen-it"]
 Shows = ["id", "title", "genre", "network", "episodes", "seasons", "metacritic", "Seen-it"]
@@ -41,10 +34,10 @@ def index():
     result = []
     queries = [
         '''SELECT People.id, name, age, Movies.title, Shows.title, Books.title, VideoGames.title FROM People
-            JOIN Movies ON Movies.id = favMovie
-            JOIN Shows ON Shows.id = favShow
-            JOIN Books ON Books.id = favBook
-            JOIN VideoGames ON VideoGames.id = favGame;''',
+            LEFT OUTER JOIN Movies ON Movies.id = favMovie
+            LEFT OUTER JOIN Shows ON Shows.id = favShow
+            LEFT OUTER JOIN Books ON Books.id = favBook
+            LEFT OUTER JOIN VideoGames ON VideoGames.id = favGame;''',
         '''SELECT People.id, title FROM Movies
             JOIN seenMovies ON Movies.id = seenMovies.movies_id
             JOIN People on seenMovies.people_id = People.id''',
@@ -61,6 +54,8 @@ def index():
     for query in queries:
         result.append(sql_query(query))
 
+    # print(result)
+
     if request.method == "POST":
         sql_query(f'''INSERT INTO People (name, age, favMovie, favShow, favBook, favGame)
                         VALUES ("{request.form['name']}", {request.form['age']}, {request.form['favMovie']}, {request.form['favShow']}, {request.form['favBook']}, {request.form['favGame']});''')
@@ -69,7 +64,7 @@ def index():
     return render_template('index.html', entity=People, result=result)
 
 
-@app.route('/movies', methods=["GET", "POST", "PATCH"])
+@app.route('/movies', methods=["GET", "POST"])
 def movies():
     result = []
     queries = [
@@ -88,7 +83,6 @@ def movies():
         elif ('people_id' in request.form) and ('movies_id' in request.form):
             sql_query(f'''INSERT INTO seenMovies (people_id, movies_id)
                         VALUES ({request.form['people_id']}, {request.form['movies_id']});''')
-        print(2)
         return redirect('/movies')
 
     return render_template('movies.html', entity=Movies, result=result)
@@ -164,6 +158,123 @@ def videogames():
         return redirect('/videogames')
 
     return render_template('videogames.html', entity=VideoGames, result=result)
+
+
+@app.route('/delete')
+def delete():
+    table = request.args.get('table')
+    id = request.args.get('id')
+
+    if not (table and id) or table not in ['People', 'Movies', 'Shows', 'Books', 'VideoGames']:
+        return redirect('/')
+
+    if table == 'People':
+        queries = [
+            f'''DELETE FROM `playedGames` WHERE people_id = {id};''',
+            f'''DELETE FROM `readBooks` WHERE people_id = {id};''',
+            f'''DELETE FROM `seenShows` WHERE people_id = {id};''',
+            f'''DELETE FROM `seenMovies` WHERE people_id = {id};''',
+            f'''DELETE FROM `People` WHERE People.id = {id};'''
+        ]
+        for query in queries:
+            sql_query(query)
+        return redirect('/')
+
+    elif table == 'Movies':
+        queries = [
+            f'''UPDATE People SET People.favMovie = NULL WHERE favMovie = {id};''',
+            f'''DELETE FROM `seenMovies` WHERE movies_id = {id};''',
+            f'''DELETE FROM `Movies` WHERE id = {id}'''
+        ]
+        for query in queries:
+            sql_query(query)
+        return redirect('/movies')
+
+    elif table == 'Shows':
+        queries = [
+            f'''UPDATE People SET People.favShow = NULL WHERE favShow = {id};''',
+            f'''DELETE FROM `seenShows` WHERE shows_id = {id};''',
+            f'''DELETE FROM `Shows` WHERE id = {id}'''
+        ]
+        for query in queries:
+            sql_query(query)
+        return redirect('/shows')
+
+    elif table == 'Books':
+        queries = [
+            f'''UPDATE People SET People.favBook = NULL WHERE favBook = {id};''',
+            f'''DELETE FROM `readBooks` WHERE books_id = {id};''',
+            f'''DELETE FROM `Books` WHERE id = {id}'''
+        ]
+        for query in queries:
+            sql_query(query)
+        return redirect('/books')
+
+    elif table == 'VideoGames':
+        queries = [
+            f'''UPDATE People SET People.favGame = NULL WHERE favGame = {id};''',
+            f'''DELETE FROM `playedGames` WHERE video_games_id = {id};''',
+            f'''DELETE FROM `VideoGames` WHERE id = {id}'''
+        ]
+        for query in queries:
+            sql_query(query)
+        return redirect('/videogames')
+
+    else:
+        return redirect('/')
+
+
+@app.route('/update', methods=["GET", "POST"])
+def update():
+    table = request.args.get('table')
+    id = request.args.get('id')
+
+    if not (table and id) or table not in ['People', 'Movies', 'Shows', 'Books', 'VideoGames']:
+        return redirect('/')
+
+    if request.method == "GET":
+        row = sql_query(f'''SELECT * FROM {table} WHERE id = {id};''')
+        entity = globals()[table]
+        if table == 'People':
+            entity = entity[1:7]
+        else:
+            entity = entity[1:-1]
+
+        print(row[0])
+        print(entity)
+
+        return render_template('update.html', row=row[0], entity=entity, table=table, id=id)
+
+    if request.method == "POST":
+        if table == 'People':
+            sql_query(f'''UPDATE People
+                        SET name = '{ request.form['name'] }',
+                            age = { request.form['age'] },
+                            favMovie = { request.form['favMovie'] },
+                            favShow = { request.form['favShow'] },
+                            favBook = { request.form['favBook'] },
+                            favGame = { request.form['favGame'] }
+                        WHERE id = {id};''')
+            return redirect('/')
+
+        elif table == 'Movies':
+            sql_query()
+            return redirect('/movies')
+
+        elif table == 'Shows':
+            sql_query()
+            return redirect('/shows')
+
+        elif table == 'Books':
+            sql_query()
+            return redirect('/books')
+
+        elif table == 'VideoGames':
+            sql_query()
+            return redirect('/videogames')
+
+        else:
+            return redirect('/')
 
 
 if __name__ == '__main__':

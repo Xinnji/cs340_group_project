@@ -27,9 +27,9 @@
                 {% endfor %}
             </td>
             <td>
-                <form class="pure-form" method="post">
-                    <input type="button" name="edit" value="E">
-                    <input type="button" name="delete" value="X">
+                <form class="pure-form">
+                    <a href="/update?table=Movies&id={{ row['id'] }}">E</a>
+                    <a href="/delete?table=Movies&id={{ row['id'] }}">X</a>
                 </form>
             </td>
         </tr>
