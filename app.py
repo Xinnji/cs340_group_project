@@ -248,53 +248,53 @@ def update():
     if request.method == "POST":
         if table == 'People':
             sql_query(f'''UPDATE People
-                        SET name = '{ request.form['name'] }',
-                            age = { request.form['age'] },
-                            favMovie = { request.form['favMovie'] },
-                            favShow = { request.form['favShow'] },
-                            favBook = { request.form['favBook'] },
-                            favGame = { request.form['favGame'] }
+                        SET name = '{request.form['name']}',
+                            age = {request.form['age']},
+                            favMovie = {request.form['favMovie']},
+                            favShow = {request.form['favShow']},
+                            favBook = {request.form['favBook']},
+                            favGame = {request.form['favGame']}
                         WHERE id = {id};''')
             return redirect('/')
 
         elif table == 'Movies':
             sql_query(f'''UPDATE Movies
-                        SET title = '{ request.form['title'] }',
-                            genre = { request.form['genre'] },
-                            director = { request.form['director'] },
-                            runTimeMins = { request.form['runTimeMins'] },
-                            metacritic = { request.form['metacritic'] }
+                        SET title = '{request.form['title']}',
+                            genre = '{request.form['genre']}',
+                            director = '{request.form['director']}',
+                            runTimeMins = {request.form['runTimeMins']},
+                            metacritic = {request.form['metacritic']}
                         WHERE id = {id};''')
             return redirect('/movies')
 
         elif table == 'Shows':
             sql_query(f'''UPDATE Shows
-                        SET title = '{ request.form['title'] }',
-                            genre = { request.form['genre'] },
-                            network = { request.form['network'] },
-                            episodes = { request.form['episodes'] },
-                            seasons = { request.form['seasons'] },
-                            metacritic = { request.form['metacritic'] }
+                        SET title = '{request.form['title']}',
+                            genre = '{request.form['genre']}',
+                            network = '{request.form['network']}',
+                            episodes = {request.form['episodes']},
+                            seasons = {request.form['seasons']},
+                            metacritic = {request.form['metacritic']}
                         WHERE id = {id};''')
             return redirect('/shows')
 
         elif table == 'Books':
             sql_query(f'''UPDATE Books
-                        SET title = '{ request.form['title'] }',
-                            genre = { request.form['genre'] },
-                            author = { request.form['author'] },
-                            pages = { request.form['pages'] },
-                            metacritic = { request.form['metacritic'] }
+                        SET title = '{request.form['title']}',
+                            genre = '{request.form['genre']}',
+                            author = '{request.form['author']}',
+                            pages = {request.form['pages']},
+                            metacritic = {request.form['metacritic']}
                         WHERE id = {id};''')
             return redirect('/books')
 
         elif table == 'VideoGames':
             sql_query(f'''UPDATE VideoGames
-                        SET title = '{ request.form['title'] }',
-                            genre = { request.form['genre'] },
-                            studio = { request.form['studio'] },
-                            playTimeHrs = { request.form['playTimeHrs'] },
-                            metacritic = { request.form['metacritic'] }
+                        SET title = '{request.form['title']}',
+                            genre = '{request.form['genre']}',
+                            studio = '{request.form['studio']}',
+                            playTimeHrs = {request.form['playTimeHrs']},
+                            metacritic = {request.form['metacritic']}
                         WHERE id = {id};''')
             return redirect('/videogames')
 
