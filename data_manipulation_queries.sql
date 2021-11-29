@@ -73,34 +73,68 @@ VALUES ({request.form['people_id']}, {request.form['video_games_id']});
 
 
 -- update a Person's data based on submission of the Update Person form
-UPDATE People SET name=:nameInput, age=:ageInput, favMovie=:movie_idInput, favShow=:show_idInput, favBook=:book_idInput, favGame=:game_idInput WHERE id=:people_idInput;
+UUPDATE People
+SET name = '{request.form['name']}',
+    age = {request.form['age']},
+    favMovie = {request.form['favMovie']},
+    favShow = {request.form['favShow']},
+    favBook = {request.form['favBook']},
+    favGame = {request.form['favGame']}
+WHERE id = {id};
 -- update a Movie's data based on submission of the Update Movie form
-UPDATE Movies SET title=:titleInput, genre=:genreInput, director=:directorInput, runTimeMins=:runTimeMinsInput, metacritic=:metacriticInput WHERE id=:movies_idInput;
+UPDATE Movies
+SET title = '{request.form['title']}',
+    genre = '{request.form['genre']}',
+    director = '{request.form['director']}',
+    runTimeMins = {request.form['runTimeMins']},
+    metacritic = {request.form['metacritic']}
+WHERE id = {id};
 -- update a Shows's data based on submission of the Update Movie form
-UPDATE Shows SET title=:titleInput, genre=:genreInput, network=:networkInput, episodes=:episodesInput, seasons=:seasonsInput, metacritic=:metacriticInput WHERE id=:shows_idInput;
+UPDATE Shows
+SET title = '{request.form['title']}',
+    genre = '{request.form['genre']}',
+    network = '{request.form['network']}',
+    episodes = {request.form['episodes']},
+    seasons = {request.form['seasons']},
+    metacritic = {request.form['metacritic']}
+WHERE id = {id};
 -- update a Books's data based on submission of the Update Movie form
-UPDATE Books SET title=:titleInput, genre=:genreInput, author=:authorInput, pages=:pagesInput, metacritic=:metacriticInput WHERE id=:books_idInput;
+UPDATE Books
+SET title = '{request.form['title']}',
+    genre = '{request.form['genre']}',
+    author = '{request.form['author']}',
+    pages = {request.form['pages']},
+    metacritic = {request.form['metacritic']}
+WHERE id = {id};
 -- update a Video Games's data based on submission of the Update Movie form
-UPDATE VideoGames SET title=:titleInput, genre=:genreInput, studio=:studioInput, playTimeHrs=:playTimeHrsInput, metacritic=:metacriticInput WHERE id=:video_games_idInput;
+UPDATE VideoGames
+SET title = '{request.form['title']}',
+    genre = '{request.form['genre']}',
+    studio = '{request.form['studio']}',
+    playTimeHrs = {request.form['playTimeHrs']},
+    metacritic = {request.form['metacritic']}
+WHERE id = {id};
 
 
--- Delete a Person
-DELETE FROM People WHERE id=:people_idInput;
--- Delete a Movie
-DELETE FROM Movies WHERE id=:movies_idInput;
--- Delete a Show
-DELETE FROM Shows WHERE id=:shows_idInput;
--- Delete a Book
-DELETE FROM Books WHERE id=:books_idInput;
--- Delete a Video Game
-DELETE FROM VideoGames WHERE id=:video_games_idInput;
-
-
--- dis-associate a movie from a person (M-to-M deletion)
-DELETE FROM seenMovies WHERE people_id=:people_idInput AND movies_id=:movies_idInput;
--- dis-associate a show from a person (M-to-M deletion)
-DELETE FROM seenShows WHERE people_id=:people_idInput AND shows_id=:shows_idInput;
--- dis-associate a book from a person (M-to-M deletion)
-DELETE FROM readBooks WHERE people_id=:people_idInput AND books_id=:books_idInput;
--- dis-associate a video game from a person (M-to-M deletion)
-DELETE FROM playedGames WHERE people_id=:people_idInput AND video_games_id=:video_games_idInput;
+-- Delete a Person and their M-to-M info
+DELETE FROM `playedGames` WHERE people_id = {id};
+DELETE FROM `readBooks` WHERE people_id = {id};
+DELETE FROM `seenShows` WHERE people_id = {id};
+DELETE FROM `seenMovies` WHERE people_id = {id};
+DELETE FROM `People` WHERE People.id = {id};
+-- Delete a Movie and their M-to-M info
+UPDATE People SET People.favMovie = NULL WHERE favMovie = {id};
+DELETE FROM `seenMovies` WHERE movies_id = {id};
+DELETE FROM `Movies` WHERE id = {id}
+-- Delete a Show and their M-to-M info
+UPDATE People SET People.favShow = NULL WHERE favShow = {id};
+DELETE FROM `seenShows` WHERE shows_id = {id};
+DELETE FROM `Shows` WHERE id = {id}
+-- Delete a Book and their M-to-M info
+UPDATE People SET People.favBook = NULL WHERE favBook = {id};
+DELETE FROM `readBooks` WHERE books_id = {id};
+DELETE FROM `Books` WHERE id = {id}
+-- Delete a Video Game and their M-to-M info
+UPDATE People SET People.favGame = NULL WHERE favGame = {id};
+DELETE FROM `playedGames` WHERE video_games_id = {id};
+DELETE FROM `VideoGames` WHERE id = {id}
