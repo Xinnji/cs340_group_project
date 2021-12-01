@@ -3,9 +3,38 @@
 {% block content%}
 <h1>Updating {{ table }} at id {{ id }}</h1>
 <form class="pure-form" method="post">
-    {% for attr in entity %}
-    <input type="text" name="{{ attr }}" placeholder="{{ attr }}" value='{{ row[attr] }}'>
-    {% endfor %}
+    {% if table == 'People' %}
+        <input type="text" name="name" placeholder="name" value="{{ row['name'] }}">
+        <input type="text" name="age" placeholder="age" value="{{ row['age'] }}">
+        <select name="favMovie">
+            <option value="NULL">None</option>
+            {% for i in result[0] %}
+            <option value="{{ i['id'] }}" {% if i['id'] == row['favMovie'] %}selected{% endif%}>{{ i['title'] }}</option>
+            {% endfor %}
+        </select>
+        <select name="favShow">
+            <option value="NULL">None</option>
+            {% for i in result[1] %}
+            <option value="{{ i['id'] }}" {% if i['id'] == row['favShow'] %}selected{% endif%}>{{ i['title'] }}</option>
+            {% endfor %}
+        </select>
+        <select name="favBook">
+            <option value="NULL">None</option>
+            {% for i in result[2] %}
+            <option value="{{ i['id'] }}" {% if i['id'] == row['favBook'] %}selected{% endif%}>{{ i['title'] }}</option>
+            {% endfor %}
+        </select>
+        <select name="favGame">
+            <option value="NULL">None</option>
+            {% for i in result[3] %}
+            <option value="{{ i['id'] }}" {% if i['id'] == row['favGame'] %}selected{% endif%}>{{ i['title'] }}</option>
+            {% endfor %}
+        </select>
+    {% else %}
+        {% for attr in entity %}
+        <input type="text" name="{{ attr }}" placeholder="{{ attr }}" value='{{ row[attr] }}'>
+        {% endfor %}
+    {% endif %}
     <input class="pure-button pure-button-primary" type="submit" value="Update Entry">
 </form>
 {% endblock %}

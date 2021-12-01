@@ -41,15 +41,19 @@ def index():
         '''SELECT People.id, title FROM Movies
             JOIN seenMovies ON Movies.id = seenMovies.movies_id
             JOIN People on seenMovies.people_id = People.id''',
-        '''SELECT People.id, title FROM Books
-            JOIN readBooks ON Books.id = readBooks.books_id
-            JOIN People on readBooks.people_id = People.id''',
         '''SELECT People.id, title FROM Shows
             JOIN seenShows ON Shows.id = seenShows.shows_id
             JOIN People on seenShows.people_id = People.id''',
+        '''SELECT People.id, title FROM Books
+            JOIN readBooks ON Books.id = readBooks.books_id
+            JOIN People on readBooks.people_id = People.id''',
         '''SELECT People.id, title FROM VideoGames
             JOIN playedGames ON VideoGames.id = playedGames.video_games_id
-            JOIN People on playedGames.people_id = People.id'''
+            JOIN People on playedGames.people_id = People.id''',
+        '''SELECT id, title FROM Movies''',
+        '''SELECT id, title FROM Shows''',
+        '''SELECT id, title FROM Books''',
+        '''SELECT id, title FROM VideoGames'''
     ]
     for query in queries:
         result.append(sql_query(query))
@@ -57,9 +61,22 @@ def index():
     # print(result)
 
     if request.method == "POST":
-        sql_query(f'''INSERT INTO People (name, age, favMovie, favShow, favBook, favGame)
-                        VALUES ("{request.form['name']}", {request.form['age']}, {request.form['favMovie']}, {request.form['favShow']}, {request.form['favBook']}, {request.form['favGame']});''')
-        return redirect('/')
+        if all(attr in request.form for attr in People[1:-4]):
+            sql_query(f'''INSERT INTO People (name, age, favMovie, favShow, favBook, favGame)
+                            VALUES ("{request.form['name']}", {request.form['age']}, {request.form['favMovie']}, {request.form['favShow']}, {request.form['favBook']}, {request.form['favGame']});''')
+            return redirect('/')
+        elif 'search' in request.form and request.form['search'] != '':
+            print(request.form)
+            filtered_result = []
+            media = result[1] + result[2] + result[3] + result[4]
+            for row in result[0]:
+                for m in media:
+                    if m['id'] == row['id']:
+                        if request.form['search'] in m['title']:
+                            filtered_result.append(row)
+                            break
+            result[0] = filtered_result
+            return render_template('index.html', entity=People, result=result)
 
     return render_template('index.html', entity=People, result=result)
 
@@ -71,7 +88,8 @@ def movies():
         '''SELECT * FROM Movies''',
         '''SELECT Movies.id, name FROM Movies
             JOIN seenMovies ON Movies.id = seenMovies.movies_id
-            JOIN People on seenMovies.people_id = People.id'''
+            JOIN People on seenMovies.people_id = People.id''',
+        '''SELECT id, name FROM People'''
     ]
     for query in queries:
         result.append(sql_query(query))
@@ -95,7 +113,8 @@ def shows():
         '''SELECT * FROM Shows''',
         '''SELECT Shows.id, name FROM Shows
             JOIN seenShows ON Shows.id = seenShows.shows_id
-            JOIN People on seenShows.people_id = People.id'''
+            JOIN People on seenShows.people_id = People.id''',
+        '''SELECT id, name FROM People'''
     ]
     for query in queries:
         result.append(sql_query(query))
@@ -119,7 +138,8 @@ def books():
         '''SELECT * FROM Books''',
         '''SELECT Books.id, name FROM Books
             JOIN readBooks ON Books.id = readBooks.books_id
-            JOIN People on readBooks.people_id = People.id'''
+            JOIN People on readBooks.people_id = People.id''',
+        '''SELECT id, name FROM People'''
     ]
     for query in queries:
         result.append(sql_query(query))
@@ -143,7 +163,8 @@ def videogames():
         '''SELECT * FROM VideoGames''',
         '''SELECT VideoGames.id, name FROM VideoGames
             JOIN playedGames ON VideoGames.id = playedGames.video_games_id
-            JOIN People on playedGames.people_id = People.id'''
+            JOIN People on playedGames.people_id = People.id''',
+        '''SELECT id, name FROM People'''
     ]
     for query in queries:
         result.append(sql_query(query))
@@ -234,16 +255,22 @@ def update():
 
     if request.method == "GET":
         row = sql_query(f'''SELECT * FROM {table} WHERE id = {id};''')
+        result = []
+        queries = [
+            '''SELECT id, title FROM Movies''',
+            '''SELECT id, title FROM Shows''',
+            '''SELECT id, title FROM Books''',
+            '''SELECT id, title FROM VideoGames'''
+        ]
+        for query in queries:
+            result.append(sql_query(query))
         entity = globals()[table]
         if table == 'People':
             entity = entity[1:7]
         else:
             entity = entity[1:-1]
 
-        print(row[0])
-        print(entity)
-
-        return render_template('update.html', row=row[0], entity=entity, table=table, id=id)
+        return render_template('update.html', row=row[0], entity=entity, table=table, id=id, result=result)
 
     if request.method == "POST":
         if table == 'People':

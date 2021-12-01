@@ -18,6 +18,11 @@
         <main>
             {% block content %}
             <h1>People</h1>
+            <form class="pure-form" method="post">
+                <input type="text" name="search" placeholder="Check what people have viewed by title!" size="50">
+                <input class="pure-button pure-button-primary" type="submit" value="Search">
+            </form>
+            <br>
             <table class="pure-table pure-table-horizontal">
                 <thead>
                     {% for attr in entity %}
@@ -49,17 +54,40 @@
                     {% endfor %}
                 </tbody>
             </table>
-            {% block update %}
+            <br>
             <form class="pure-form" method="post">
                 <input type="text" name="name" placeholder="name">
                 <input type="text" name="age" placeholder="age">
-                <input type="text" name="favMovie" placeholder="favMovie">
-                <input type="text" name="favShow" placeholder="favShow">
-                <input type="text" name="favGame" placeholder="favGame">
-                <input type="text" name="favBook" placeholder="favBook">
+                <select name="favMovie">
+                    <option disabled selected>favMovie</option>
+                    <option value="NULL">None</option>
+                    {% for row in result[5] %}
+                    <option value="{{ row['id'] }}">{{ row['title'] }}</option>
+                    {% endfor %}
+                </select>
+                <select name="favShow">
+                    <option disabled selected>favShow</option>
+                    <option value="NULL">None</option>
+                    {% for row in result[6] %}
+                    <option value="{{ row['id'] }}">{{ row['title'] }}</option>
+                    {% endfor %}
+                </select>
+                <select name="favBook">
+                    <option disabled selected>favBook</option>
+                    <option value="NULL">None</option>
+                    {% for row in result[7] %}
+                    <option value="{{ row['id'] }}">{{ row['title'] }}</option>
+                    {% endfor %}
+                </select>
+                <select name="favGame">
+                    <option disabled selected>favGame</option>
+                    <option value="NULL">None</option>
+                    {% for row in result[8] %}
+                    <option value="{{ row['id'] }}">{{ row['title'] }}</option>
+                    {% endfor %}
+                </select>
                 <input class="pure-button pure-button-primary" type="submit" value="Add Entry">
             </form>
-            {% endblock %}
             {% endblock %}
         </main>
     </body>

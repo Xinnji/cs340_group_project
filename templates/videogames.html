@@ -2,11 +2,6 @@
 {% block title %}Video Games{% endblock %}
 {% block content %}
 <h1>Video Games</h1>
-<form class="pure-form" method="post">
-    <td></td>
-    <td><input type="text" name="Search" placeholder="Person Name Search"></td>
-    <td><input class="pure-button pure-button-primary" type="submit" value="Search"></td>
-</form>
 <table class="pure-table pure-table-horizontal">
     <thead>
         {% for attr in entity %}
@@ -36,6 +31,7 @@
         {% endfor %}
     </tbody>
 </table>
+<br>
 <form class="pure-form" method="post">
     <input type="text" name="title" placeholder="title">
     <input type="text" name="genre" placeholder="genre">
@@ -46,8 +42,18 @@
 </form>
 <h1>Played Something New?</h1>
 <form class="pure-form" method="post">
-    <input type="text" name="people_id" placeholder="people_id">
-    <input type="text" name="video_games_id" placeholder="video_games_id">
+    <select name="people_id">
+        <option disabled selected>People</option>
+        {% for row in result[2] %}
+        <option value="{{ row['id'] }}">{{ row['name'] }}</option>
+        {% endfor %}
+    </select>
+    <select name="video_games_id">
+        <option disabled selected>VideoGames</option>
+        {% for row in result[0] %}
+        <option value="{{ row['id'] }}">{{ row['title'] }}</option>
+        {% endfor %}
+    </select>
     <input class="pure-button pure-button-primary" type="submit" value="Add Played Game">
 </form>
 {% endblock %}
